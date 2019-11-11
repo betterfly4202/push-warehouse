@@ -1,0 +1,41 @@
+spring:
+  profiles:
+    active: local
+  jpa:
+      hibernate:
+      use-new-id-generator-mappings: false
+
+---
+spring:
+  profiles: local
+  redis:
+    host: 127.0.0.1
+    port: 6380
+    password: 1234
+
+  datasource:
+    hikari:
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/push
+      username: root
+      password: 1234
+      driver-class-name: org.h2.Driver
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+---
+spring:
+  profiles: dev
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: 1234
+  datasource:
+    hikari:
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/push
+      username: root
+      password: 1234
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      connection-test-query: select 1
