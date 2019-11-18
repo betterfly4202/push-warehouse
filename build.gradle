@@ -23,6 +23,7 @@ dependencies {
         exclude(group: 'org.apache.tomcat', module: 'tomcat-jdbc')
     }
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }

@@ -26,7 +26,7 @@ import static org.junit.Assert.assertThat;
 @DataJpaTest
 @RunWith(SpringRunner.class)
 @ActiveProfiles("local")
-public class AutoPushTest {
+public class  AutoPushTest {
     @Autowired
     AutoPushJPARepository repository;
 
@@ -56,7 +56,7 @@ public class AutoPushTest {
                 .cmpnNo(1096)
                 .cmpnSeq(10)
                 .testGroup(1)
-                .title("TEST AAA  title")
+                .title("TEST AAA-TEST  title")
                 .content("TEST content")
                 .image("TEST Image")
                 .eventLandingUrl("www.wemakeprice.com")

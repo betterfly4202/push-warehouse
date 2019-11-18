@@ -1,9 +1,6 @@
 spring:
   profiles:
     active: local
-  jpa:
-      hibernate:
-      use-new-id-generator-mappings: false
 
 ---
 spring:
@@ -39,3 +36,6 @@ spring:
       password: 1234
       driver-class-name: com.mysql.cj.jdbc.Driver
       connection-test-query: select 1
+  jpa:
+    hibernate:
+      use-new-id-generator-mappings: false
