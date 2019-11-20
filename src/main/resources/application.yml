@@ -39,3 +39,5 @@ spring:
   jpa:
     hibernate:
       use-new-id-generator-mappings: false
+#  batch:
+#    initialize-schema: ALWAYS
