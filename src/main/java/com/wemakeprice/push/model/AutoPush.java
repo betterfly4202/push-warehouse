@@ -68,7 +68,7 @@ public class AutoPush {
     @Column(name ="deal_id",nullable= false)
     private Long dealId;
 
-     @Column(name ="utm_source",nullable= false)
+    @Column(name ="utm_source",nullable= false)
     private Integer utmSource;
 
     @NotEmpty @Column(name ="utm_medium",nullable= false)
@@ -77,7 +77,7 @@ public class AutoPush {
     @Column(name ="utm_campaign",nullable= false)
     private Integer utmCampaign;
 
-     @Column(name ="utm_content",nullable= false)
+    @Column(name ="utm_content",nullable= false)
     private Integer utmContent;
 
     @Builder

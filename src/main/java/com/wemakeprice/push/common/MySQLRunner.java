@@ -26,7 +26,7 @@ public class MySQLRunner implements ApplicationRunner {
 
     private void saveSample(){
         AutoPush autoPush = AutoPush.builder()
-                .curdate("2019-11-20")
+                .curdate("2019-11-27")
                 .sendPlanTime("08:10:00")
                 .sortNo(1)
                 .mobileToken("AAA-BB-CCC")
