@@ -1,18 +1,22 @@
 package com.wemakeprice.push.model;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wemakeprice.push.repository.RedisSampleRedisRepository;
 import com.wemakeprice.push.service.RedisService;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.stream.IntStream;
 
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -35,39 +39,32 @@ public class RedisSampleTest{
         repository.deleteAll();
     }
 
-    @Test
-    public void 레디스_등록_조회(){
+    private RedisSample sample;
+    private String id = "betterFLY";
+
+    @Before
+    public void init(){
         //given
-        String id = "betterFLY";
         LocalDateTime now = LocalDateTime.now();
-        RedisSample sample = RedisSample.builder()
+        sample = RedisSample.builder()
                 .id(id)
                 .refreshTime(now)
                 .point(1_000L)
                 .build();
+    }
 
-
+    @Test
+    public void 레디스_등록_조회(){
         //when
         repository.save(sample);
 
         //then
         RedisSample loadRedis = repository.findById(id).get();
         assertThat(loadRedis.getPoint(), is(1000L));
-        assertThat(loadRedis.getRefreshTime(), is(now));
     }
 
     @Test
     public void 레디스_등록_수정(){
-        //given
-        String id = "betterFLY";
-        LocalDateTime now = LocalDateTime.now();
-        RedisSample sample = RedisSample.builder()
-                .id(id)
-                .refreshTime(now)
-                .point(2_000L)
-                .build();
-
-
         //when
         repository.save(sample);
         RedisSample loadRedis = repository.findById(id).get();
@@ -76,25 +73,31 @@ public class RedisSampleTest{
 
         //then
         assertThat(loadRedis.getPoint(), is(30000L));
-        assertThat(loadRedis.getRefreshTime(), is(now));
     }
 
     @Test
     public void 레디스_Set(){
-        String id = "betterFLY";
-        LocalDateTime now = LocalDateTime.now();
-        RedisSample sample = RedisSample.builder()
-                .id(id)
-                .refreshTime(now)
-                .point(1_000L)
-                .build();
-
-        redisService.set("sample_A", sample);
+        redisService.set("key_3", sample);
     }
 
     @Test
-    public void 레디스_Get(){
-        System.out.println(redisService.get("sample"));
+    public void 레디스_Get() throws IOException {
+        RedisSample redisSample = new ObjectMapper().readValue(redisService.get("key_3").toString(), RedisSample.class);
+
+        assertThat(redisSample.getPoint(), is(1_000L));
+    }
+
+    @Test
+    public void 레디스_삭제(){
+        //when
+        String key = "key_delete";
+        redisService.set(key, sample);
+
+        //when
+        redisService.delete(key);
+
+        //then
+        assertFalse(redisService.hasKey(key));
     }
 
 
