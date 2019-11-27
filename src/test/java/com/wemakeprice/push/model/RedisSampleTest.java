@@ -1,6 +1,5 @@
 package com.wemakeprice.push.model;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wemakeprice.push.repository.RedisSampleRedisRepository;
 import com.wemakeprice.push.service.RedisService;
 import org.junit.After;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.stream.IntStream;
 
@@ -77,14 +75,12 @@ public class RedisSampleTest{
 
     @Test
     public void 레디스_Set(){
-        redisService.set("key_3", sample);
+        redisService.set("key_5", sample);
     }
 
     @Test
-    public void 레디스_Get() throws IOException {
-        RedisSample redisSample = new ObjectMapper().readValue(redisService.get("key_3").toString(), RedisSample.class);
-
-        assertThat(redisSample.getPoint(), is(1_000L));
+    public void 레디스_Get() {
+        assertThat(redisService.get("key_5").getPoint(), is(1_000L));
     }
 
     @Test

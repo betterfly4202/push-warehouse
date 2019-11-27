@@ -1,5 +1,6 @@
 package com.wemakeprice.push.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.Builder;
@@ -24,6 +25,7 @@ public class RedisSample implements Serializable {
     public static Gson g = new GsonBuilder().disableHtmlEscaping().create();
 
     @Id
+    @JsonProperty("id")
     private String id;
     @Setter
     private Long point;
