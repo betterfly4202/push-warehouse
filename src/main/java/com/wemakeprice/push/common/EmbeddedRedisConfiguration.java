@@ -20,7 +20,7 @@ import java.util.stream.IntStream;
  */
 
 @Slf4j
-@Profile("local")
+@Profile("dev")
 @Configuration
 public class EmbeddedRedisConfiguration {
     @Value("${spring.redis.port}")

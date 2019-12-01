@@ -1,5 +1,7 @@
 package com.wemakeprice.push.model;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +19,8 @@ import java.time.LocalDateTime;
 @Getter
 @RedisHash("redisSample")
 public class RedisSample implements Serializable {
+    public static Gson g = new GsonBuilder().disableHtmlEscaping().create();
+
     @Id
     private String id;
     @Setter
@@ -28,5 +32,10 @@ public class RedisSample implements Serializable {
         this.id = id;
         this.point = point;
         this.refreshTime = refreshTime;
+    }
+
+    @Override
+    public String toString() {
+        return g.toJson(this);
     }
 }
