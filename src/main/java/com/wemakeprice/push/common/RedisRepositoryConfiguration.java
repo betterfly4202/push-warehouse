@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * Created by 이충일 (betterfly@wemakeprice.com)
@@ -21,15 +23,35 @@ public class RedisRepositoryConfiguration {
     @Value("${spring.redis.port}")
     private int redisPort;
 
+    @Value("${spring.redis.password}")
+    private String redisPassword;
+
+
     @Bean
     public RedisConnectionFactory redisConnectionFactory(){
-        return new LettuceConnectionFactory(redisHost, redisPort);
+        LettuceConnectionFactory factory = new LettuceConnectionFactory(redisHost, redisPort);
+        factory.setPassword(redisPassword);
+        return factory;
     }
 
     @Bean
-    public RedisTemplate<?, ?> redisTemplate(){
-        RedisTemplate<byte[], byte[]> redisTemplate = new RedisTemplate<>();
+    public JedisConnectionFactory jedisConnectionFactory(){
+        JedisConnectionFactory jedisFactory = new JedisConnectionFactory();
+        jedisFactory.setHostName(redisHost);
+        jedisFactory.setPort(redisPort);
+        jedisFactory.setPassword(redisPassword);
+        jedisFactory.setUsePool(true);
+        return jedisFactory;
+    }
+
+
+    @Bean("redisTemplate")
+    public RedisTemplate<String, Object> redisTemplate(){
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new StringRedisSerializer());
+//        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(RedisSample.class));
 
         return redisTemplate;
     }

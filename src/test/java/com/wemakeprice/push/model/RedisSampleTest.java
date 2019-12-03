@@ -1,6 +1,7 @@
 package com.wemakeprice.push.model;
 
 import com.wemakeprice.push.repository.RedisSampleRedisRepository;
+import com.wemakeprice.push.service.RedisService;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +26,9 @@ public class RedisSampleTest{
 
     @Autowired
     private RedisSampleRedisRepository repository;
+
+    @Autowired
+    private RedisService redisService;
 
     @After
     public void tearDown(){
@@ -74,6 +78,25 @@ public class RedisSampleTest{
         assertThat(loadRedis.getPoint(), is(30000L));
         assertThat(loadRedis.getRefreshTime(), is(now));
     }
+
+    @Test
+    public void 레디스_Set(){
+        String id = "betterFLY";
+        LocalDateTime now = LocalDateTime.now();
+        RedisSample sample = RedisSample.builder()
+                .id(id)
+                .refreshTime(now)
+                .point(1_000L)
+                .build();
+
+        redisService.set("sample_A", sample);
+    }
+
+    @Test
+    public void 레디스_Get(){
+        System.out.println(redisService.get("sample"));
+    }
+
 
     @Test(expected = IllegalArgumentException.class)
     public void IntStream_Throw(){
