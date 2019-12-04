@@ -11,7 +11,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * Created by 이충일 (betterfly@wemakeprice.com)
@@ -29,10 +28,11 @@ public class RedisSample implements Serializable {
     private String id;
     @Setter
     private Long point;
-    private LocalDateTime refreshTime;
+    private String refreshTime;
+//    private LocalDateTime refreshTime;
 
     @Builder
-    public RedisSample(String id, Long point, LocalDateTime refreshTime){
+    public RedisSample(String id, Long point, String refreshTime){
         this.id = id;
         this.point = point;
         this.refreshTime = refreshTime;
