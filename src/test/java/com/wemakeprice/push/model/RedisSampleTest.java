@@ -74,12 +74,12 @@ public class RedisSampleTest{
 
     @Test
     public void 레디스_Set(){
-        redisService.set("key_13", sample);
+        redisService.set("key_15", sample);
     }
 
     @Test
     public void 레디스_Get() {
-        assertThat(redisService.get("key_13").getPoint(), is(1_000L));
+        assertThat(redisService.get("key_15").getPoint(), is(1_000L));
     }
 
     @Test

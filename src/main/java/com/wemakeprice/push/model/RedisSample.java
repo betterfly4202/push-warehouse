@@ -1,6 +1,5 @@
 package com.wemakeprice.push.model;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.Builder;
@@ -21,7 +20,6 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @RedisHash("redisSample")
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "className")
 public class RedisSample implements Serializable {
     public static Gson g = new GsonBuilder().disableHtmlEscaping().create();
 
