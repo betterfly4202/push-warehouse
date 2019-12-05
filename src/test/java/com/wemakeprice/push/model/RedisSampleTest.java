@@ -43,10 +43,9 @@ public class RedisSampleTest{
     @Before
     public void init(){
         //given
-        LocalDateTime now = LocalDateTime.now();
         sample = RedisSample.builder()
                 .id(id)
-                .refreshTime("2019-12-06")
+                .refreshTime(LocalDateTime.now())
                 .point(1_000L)
                 .build();
     }
@@ -75,12 +74,12 @@ public class RedisSampleTest{
 
     @Test
     public void 레디스_Set(){
-        redisService.set("key_7", sample);
+        redisService.set("key_13", sample);
     }
 
     @Test
     public void 레디스_Get() {
-        assertThat(redisService.get("key_7").getPoint(), is(1_000L));
+        assertThat(redisService.get("key_13").getPoint(), is(1_000L));
     }
 
     @Test

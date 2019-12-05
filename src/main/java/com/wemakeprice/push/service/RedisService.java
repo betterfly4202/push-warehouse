@@ -15,14 +15,14 @@ import org.springframework.stereotype.Service;
 public class RedisService {
 
     @Autowired
-    private RedisTemplate<String, RedisSample> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     public void set(String key, RedisSample data){
         redisTemplate.opsForValue().set(key, data);
     }
 
     public RedisSample get(String key){
-        return redisTemplate.opsForValue().get(key);
+        return (RedisSample)redisTemplate.opsForValue().get(key);
     }
 
     public void delete(String key){
