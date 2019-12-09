@@ -1,5 +1,6 @@
 package com.wemakeprice.push.service;
 
+import com.wemakeprice.push.model.Push;
 import com.wemakeprice.push.model.RedisSample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -17,12 +18,16 @@ public class RedisService {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
-    public void set(String key, RedisSample data){
+    public void set(String key, Object data){
         redisTemplate.opsForValue().set(key, data);
     }
 
     public RedisSample get(String key){
         return (RedisSample)redisTemplate.opsForValue().get(key);
+    }
+
+    public Push pushGet(String key){
+        return (Push) redisTemplate.opsForValue().get(key);
     }
 
     public void delete(String key){

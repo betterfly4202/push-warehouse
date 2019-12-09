@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.stream.IntStream;
 
 import static org.hamcrest.core.Is.is;
@@ -38,15 +39,24 @@ public class RedisSampleTest{
     }
 
     private RedisSample sample;
+    private Push push;
     private String id = "betterFLY";
 
     @Before
     public void init(){
         //given
+        LocalDateTime now = LocalDateTime.now();
         sample = RedisSample.builder()
                 .id(id)
-                .refreshTime(LocalDateTime.now())
+                .refreshTime(now)
                 .point(1_000L)
+                .build();
+
+        push = Push.builder()
+                .id(1L)
+                .contents("SAMPLE")
+                .token(Arrays.asList("AA-bbcc", "xxxx-ASDW", "120391a-AA"))
+                .refreshTime(now)
                 .build();
     }
 
@@ -75,11 +85,15 @@ public class RedisSampleTest{
     @Test
     public void 레디스_Set(){
         redisService.set("key_15", sample);
+        redisService.set("push_1", push);
+        ;
     }
 
     @Test
     public void 레디스_Get() {
         assertThat(redisService.get("key_15").getPoint(), is(1_000L));
+        assertThat(redisService.pushGet("push_1").getId(), is(1L));
+//        System.out.println(redisService.pushGet("push_1").getToken());
     }
 
     @Test

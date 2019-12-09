@@ -1,0 +1,39 @@
+{
+  "info": {
+    "date": "2019-12-09",
+    "sendPlanTime": "20:00:00",
+    "allowTarget": 2,
+    "scheduleSeq": 10,
+    "campaignSeq": 11,
+    "campaignItemSeq": 109,
+    "messageSeq": 15
+  },
+  "pushSet": [
+    {
+      "key": "CONCAT(device , cmpn_no, cmpn_seq, test_group, title , content , image , event_landing_url , deal_id , utm_source , utm_medium , utm_campaign , utm_content)",
+      "detail": {
+        "device": 3,
+        "title": "Test Title",
+        "content": "Test Content",
+        "image": "http://image.net",
+        "link": "new JsonParser().parse(trimToJsonString(detail.getEventLandingUrl())))",
+        "utm": "utm_source=%d&utm_medium=%s&utm_campaign=%d&utm_content=%d",
+        "timestamp": "Timestamp.valueOf(detail.getSendPlanDateTime()).getTime() / 1000)",
+        "target": [
+          {
+            "token":"AAAA-BBXXX",
+            "mid" : 5286554
+          },
+          {
+            "token":"AAAA-BBXXX",
+            "mid" : 1123334
+          },
+          {
+            "token":"AAAA-BBXXX",
+            "mid" : 112222
+          }
+        ]
+      }
+    }
+  ]
+}
