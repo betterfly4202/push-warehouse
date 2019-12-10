@@ -5,30 +5,51 @@ spring:
 ---
 spring:
   profiles: local
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
   redis:
     host: 127.0.0.1
-    port: 6380
-    password: 1234
-
-  datasource:
-    hikari:
-      jdbc-url: jdbc:mysql://127.0.0.1:3306/push
-      username: root
-      password: 1234
-      driver-class-name: org.h2.Driver
+    port: 6379
+    password:
+    ssl: false
+    timeout: 3s
+    # default settings
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
+      shutdown-timeout: 100ms
 
   h2:
     console:
       enabled: true
       path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
 
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
 ---
 spring:
   profiles: dev
   redis:
     host: 127.0.0.1
     port: 6379
-    password: 1234
+    password:
   datasource:
     hikari:
       jdbc-url: jdbc:mysql://127.0.0.1:3306/push
@@ -36,8 +57,3 @@ spring:
       password: 1234
       driver-class-name: com.mysql.cj.jdbc.Driver
       connection-test-query: select 1
-  jpa:
-    hibernate:
-      use-new-id-generator-mappings: false
-#  batch:
-#    initialize-schema: ALWAYS
