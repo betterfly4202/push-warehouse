@@ -1,4 +1,4 @@
-package com.wemakeprice.push.model;
+package com.wemakeprice.push.entity;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -24,6 +24,7 @@ import java.util.Objects;
 public class AutoPush {
     @Id
     @GeneratedValue
+    @Column(name ="push_seq", nullable = false)
     private Long seq;
 
     @NotEmpty @Column(nullable = false)

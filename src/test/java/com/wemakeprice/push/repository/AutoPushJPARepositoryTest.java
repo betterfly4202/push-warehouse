@@ -1,11 +1,12 @@
 package com.wemakeprice.push.repository;
 
-import com.wemakeprice.push.model.AutoPush;
+import com.wemakeprice.push.entity.AutoPush;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.sql.DataSource;
@@ -24,6 +25,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Profile("dev")
 public class AutoPushJPARepositoryTest {
     @Qualifier("dataSource")
     @Autowired
@@ -36,13 +38,13 @@ public class AutoPushJPARepositoryTest {
     public void 로컬환경_H2_연결() throws SQLException {
         try(Connection connection = dataSource.getConnection()){
             DatabaseMetaData metaData = connection.getMetaData();
-            assertThat(metaData.getDriverName(), is("H2 JDBC Driver"));
-            assertThat(metaData.getUserName(), is("SA"));
+            System.out.println(metaData.getDriverName());
+            System.out.println(metaData.getUserName());
         }
     }
 
     @Test
-    public void JPA_H2(){
+    public void JPA_기본데이터_만들기(){
         AutoPush autoPush = AutoPush.builder()
                 .curdate("2019-11-20")
                 .sendPlanTime("08:10:00")
@@ -66,7 +68,6 @@ public class AutoPushJPARepositoryTest {
 
         AutoPush newAutoPush = repository.save(autoPush);
         assertNotNull(newAutoPush);
-        assertThat(newAutoPush.getSeq(), is(2L));
 
         AutoPush existingAutoPush = repository.findBySeq(newAutoPush.getSeq());
         assertNotNull(existingAutoPush);

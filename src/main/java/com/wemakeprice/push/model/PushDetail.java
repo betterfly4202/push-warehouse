@@ -1,5 +1,6 @@
 package com.wemakeprice.push.model;
 
+import com.wemakeprice.push.entity.AutoPush;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
