@@ -6,10 +6,17 @@ spring:
 spring:
   profiles: local
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password:
+    hikari:
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/push
+      username: push_admin
+      password: 1234
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      connection-test-query: select 1
+#  datasource:
+#    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:mem:testdb
+#    username: sa
+#    password:
   redis:
     host: 127.0.0.1
     port: 6379
@@ -24,7 +31,6 @@ spring:
         max-wait: -1ms
         min-idle: 0
       shutdown-timeout: 100ms
-
   h2:
     console:
       enabled: true
@@ -33,6 +39,8 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  batch:
+    initialize-schema: always
 
 logging:
   level:
@@ -43,6 +51,14 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
+
+
+# program properties
+etl:
+  tableName:
+    spread: tb_autopush_interface_spread
+    inform: tb_autopush_interface_inform
+
 ---
 spring:
   profiles: dev
@@ -50,10 +66,35 @@ spring:
     host: 127.0.0.1
     port: 6379
     password:
+    ssl: false
+    timeout: 3s
+    # default settings
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
+      shutdown-timeout: 100ms
   datasource:
     hikari:
       jdbc-url: jdbc:mysql://127.0.0.1:3306/push
-      username: root
+      username: push_admin
       password: 1234
       driver-class-name: com.mysql.cj.jdbc.Driver
       connection-test-query: select 1
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  logging:
+    level:
+      org:
+        hibernate:
+          SQL: DEBUG
+          type:
+            descriptor:
+              sql:
+                BasicBinder: TRACE

@@ -1,5 +1,6 @@
 package com.wemakeprice.push.model;
 
+import com.wemakeprice.push.entity.AutoPush;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +17,7 @@ public class PushDetailTest {
         //given
         autoPush = AutoPush.builder()
                 .curdate("2019-11-20")
-                .sendPlanTime("08:10:00")
+                .sendPlanTime("108:10:00")
                 .sortNo(1)
                 .mobileToken("AAA-BB-CCC")
                 .device(3)

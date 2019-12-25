@@ -1,5 +1,6 @@
 package com.wemakeprice.push.model;
 
+import com.wemakeprice.push.entity.AutoPush;
 import com.wemakeprice.push.repository.RedisSampleRedisRepository;
 import com.wemakeprice.push.service.RedisService;
 import org.junit.After;
@@ -127,7 +128,6 @@ public class RedisSampleTest{
         assertThat(push.getPushDetailMap().get(pushDetail.getPushDetailCode()).getTitle(), is("TEST AAA-TEST  title"));
     }
 
-    @Test
     public void 레디스_삭제(){
         //when
         redisService.delete(push.getRedisKey());
