@@ -13,17 +13,21 @@ import org.springframework.batch.core.job.flow.JobExecutionDecider;
 @Slf4j
 @RequiredArgsConstructor
 public class ETLExecuteDecider implements JobExecutionDecider {
-    private final PushTarget pushTarget;
     private final ETLJPARepository etlJpaRepository;
+    private static final String PUSH_TARGET= "pushTarget";
 
     @Override
     public FlowExecutionStatus decide(JobExecution jobExecution, StepExecution stepExecution) {
-        final int etlStatus = etlJpaRepository.findByTableName(pushTarget.getEtlTableName()).getLastValue();
+        final int etlStatus = etlJpaRepository.findByTableName(getBatchTarget(jobExecution).getEtlTableName()).getLastValue();
 
         if(etlStatus < 1){
             return new FlowExecutionStatus("END");
         }
 
         return new FlowExecutionStatus("START");
+    }
+
+    private PushTarget getBatchTarget(JobExecution jobExecution){
+        return PushTarget.findByTargetService(jobExecution.getJobParameters().getString(PUSH_TARGET));
     }
 }

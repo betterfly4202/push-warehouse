@@ -74,7 +74,8 @@ public class PushJobConfiguration {
     @Bean
     public JobExecutionDecider decider(
             @Autowired ETLJPARepository etljpaRepository) {
-        return new ETLExecuteDecider(this.pushTarget, etljpaRepository);
+
+        return new ETLExecuteDecider(etljpaRepository);
     }
 
     @Bean
