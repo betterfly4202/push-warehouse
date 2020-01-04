@@ -12,7 +12,7 @@ import org.springframework.batch.core.job.flow.JobExecutionDecider;
 
 @Slf4j
 @RequiredArgsConstructor
-public class ETLExecuteDecider implements JobExecutionDecider {
+public class ETLStatusDecider implements JobExecutionDecider {
     private final ETLJPARepository etlJpaRepository;
     private static final String PUSH_TARGET= "pushTarget";
 
@@ -21,6 +21,8 @@ public class ETLExecuteDecider implements JobExecutionDecider {
         final int etlStatus = etlJpaRepository.findByTableName(getBatchTarget(jobExecution).getEtlTableName()).getLastValue();
 
         if(etlStatus < 1){
+            log.info("Job is not ready yet.");
+
             return new FlowExecutionStatus("END");
         }
 
