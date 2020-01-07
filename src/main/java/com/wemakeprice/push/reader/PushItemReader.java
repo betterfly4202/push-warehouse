@@ -1,4 +1,4 @@
-package com.wemakeprice.push.item;
+package com.wemakeprice.push.reader;
 
 import com.wemakeprice.push.entity.AutoPush;
 import com.wemakeprice.push.repository.AutoPushJPARepository;

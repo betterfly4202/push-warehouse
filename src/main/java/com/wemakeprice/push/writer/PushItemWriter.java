@@ -1,4 +1,4 @@
-package com.wemakeprice.push.item;
+package com.wemakeprice.push.writer;
 
 import com.wemakeprice.push.repository.AutoPushRedisRepository;
 import lombok.RequiredArgsConstructor;

@@ -6,20 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
-/**
- * Created by 이충일 (betterfly@wemakeprice.com)
- * Date : 2019.11.20
- *
- */
-
 @Entity
 @Getter
-@Table(name= "tb_autopush_interface_spread")
-@SecondaryTable(name = "tb_autopush_interface_inform")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AutoPush {
     @Id
@@ -79,7 +74,7 @@ public class AutoPush {
     private Integer utmCampaign;
 
     @Column(name ="utm_content",nullable= false)
-    private Integer utmContent;
+    protected Integer utmContent;
 
     @Builder
     public AutoPush(String curdate, String sendPlanTime, Integer sortNo, String mobileToken, Integer device, Integer mId, Integer cmpnNo, Integer cmpnSeq, Integer testGroup,
